@@ -1,7 +1,7 @@
 # Diamond
 ==================================================================================
 
-Apulis DLWorkspace testing framework
+Apulis DLWorkspace Testing Platform
 
 
 小组日报

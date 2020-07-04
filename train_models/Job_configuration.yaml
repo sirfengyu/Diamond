@@ -1,0 +1,10 @@
+mindspore:
+  JobName: Test_mindspore_8npu
+  Image: apulistech/mindspore:0.3.0-withtools
+  Cmd: sudo -E bash -c 'cd /data/resnet50_cifar10/ && mkdir -p /var/log/npu/conf/slog/ && cp slog.conf /var/log/npu/conf/slog/ && ./run_8p.sh &&sleep infinity'
+
+
+tf:
+  name: test_tensorflow_8npu
+  Image: apulistech/tensorflow:1.15-withtools
+  cmd: "sudo -E bash -c 'source /pod.env && cp -r /data/Resnet50_HC /tmp/ && pip install sympy && cd /tmp/Resnet50_HC/  && ./run_8p.sh && sleep infinity'"

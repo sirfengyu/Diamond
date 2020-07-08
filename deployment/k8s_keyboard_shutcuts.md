@@ -88,3 +88,15 @@
 * 确认服务器中是否有nvidia显卡的命令
 
     `lspci -vnnn | perl -lne 'print if /^\d+\:.+(\[\S+\:\S+\])/' | grep VGA | grep -i NVIDIA`
+
+* 查看 npu 接口状态
+
+`for i in {0..7}; do hccn_tool -i ${i} -link -g;done`
+
+* 查看 npu 使用状态
+
+    `npu-smi info`
+
+* 查看 npu 监控文件状态
+
+    `cat /var/log/npu/npu_smi/device0`

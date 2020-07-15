@@ -8,10 +8,13 @@ DB:
   db_name: Mysql
   db_account: {'root':'corona@2020@wuhan'}
 
+gitee:
+  account: apulis_contact
+  username: apulis#123
 
 train_mirror:
   tf: ubuntu_tf_test:1.15
-  mindspore: apulistech/mindspore:0.2.0
+  mindspore: apulistech/mindspore:0.5.0
   gpu_regular:
     - apulistech/cuda:10.0-withtools
     - apulistech/horovod:latest-withtools
@@ -25,7 +28,6 @@ docker_hub:     
   path: apulistech/
   account_name: apulistech
   account_passwd: Yitong#123
-
 
 sandbox02:
   link: "http://sandbox2-master.sigsus.cn:52080/custom-user-dashboard/user/login"

@@ -1,0 +1,76 @@
+FROM ubuntu:18.04
+
+ARG NNAE_VERSION
+ARG NNAE_ARCH=arm64
+ARG TF_PKG=tensorflow-1.15.0-cp37-cp37m-linux_aarch64.whl
+ARG HOST_ASCEND_BASE=/usr/local/Ascend
+ARG CNT_ASCEND_BASE=/usr/local/Ascend/nnae/$NNAE_VERSION/$NNAE_ARCH-linux_gcc7.3.0
+ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
+ARG PREBUILD_SH=prebuild.sh
+ARG POSTBUILD_SH=postbuild.sh
+WORKDIR /root
+COPY . ./
+
+# 触发prebuild.sh
+RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
+
+# 系统包
+RUN apt update && \
+    apt install --no-install-recommends python3.7 python3.7-dev curl g++ pkg-config unzip \
+        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev -y
+
+# pip3.7
+RUN curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    cd /tmp && \
+    apt-get download python3-distutils && \
+    dpkg-deb -x python3-distutils_*.deb / && \
+    rm python3-distutils_*.deb && \
+    cd - && \
+    python3.7 get-pip.py && \
+    rm get-pip.py
+
+# HwHiAiUser
+RUN umask 0022 && \
+    groupadd HwHiAiUser && \
+    useradd -g HwHiAiUser -m -d /home/HwHiAiUser HwHiAiUser
+
+# python包
+RUN pip3.7 install numpy && \
+    pip3.7 install decorator && \
+    pip3.7 install sympy==1.4 && \
+    pip3.7 install cffi==1.12.3 && \
+    pip3.7 install pyyaml && \
+    pip3.7 install pathlib2 && \
+    pip3.7 install grpcio && \
+    pip3.7 install grpcio-tools && \
+    pip3.7 install protobuf && \
+    pip3.7 install scipy && \
+    pip3.7 install requests
+
+# Ascend包
+RUN bash $INSTALL_ASCEND_PKGS_SH
+
+# 配套包
+RUN pip3.7 install $CNT_ASCEND_BASE/fwkacllib/lib64/topi-*-py3-none-any.whl && \
+    pip3.7 install $CNT_ASCEND_BASE/fwkacllib/lib64/te-*-py3-none-any.whl && \
+    pip3.7 install $CNT_ASCEND_BASE/fwkacllib/lib64/hccl-*-py3-none-any.whl
+
+# TF安装
+ENV LD_LIBRARY_PATH=\
+/usr/lib/aarch64-linux-gnu/hdf5/serial:\
+$HOST_ASCEND_BASE/add-ons:\
+$CNT_ASCEND_BASE/fwkacllib/lib64:\
+$HOST_ASCEND_BASE/driver/lib64/common:\
+$HOST_ASCEND_BASE/driver/lib64/driver:$LD_LIBRARY_PATH
+
+RUN pip3.7 install $TF_PKG
+
+# 环境变量
+ENV GLOG_v=2
+ENV TBE_IMPL_PATH=$CNT_ASCEND_BASE/opp/op_impl/built-in/ai_core/tbe
+ENV PATH=$CNT_ASCEND_BASE/fwkacllib/ccec_compiler/bin/:$PATH
+ENV PYTHONPATH=$TBE_IMPL_PATH:$PYTHONPATH
+
+# 触发postbuild.sh
+RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
+    rm $POSTBUILD_SH

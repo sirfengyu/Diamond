@@ -3,7 +3,7 @@
 1、开源平台 0.1.2 主流程回归 80% 
 （
   mindspore的单机多卡NPU灵活调度还有问题:
-      提交多个1卡job,后提交的job报错
+      提交1卡job device ！=0 提交报错
       提交4卡job device = 4、5、6、7 job报错
 ）
 

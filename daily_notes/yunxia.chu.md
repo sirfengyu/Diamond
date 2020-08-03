@@ -1,6 +1,11 @@
+## 2020-08-02
+1. 开源平台的用户、vc需求分析会议
+2. aiarts平台测试
+
+
 ## 2020-08-01
 1. 重装atlas02和atlas01的驱动，重装完成后ms无法print；在atlas02上使用mindspore0.6.0，import ms时报错
-2. atlas02宿主机上安装tf，import 成功
+2. atlas02宿主机上安装tf，import npu_bridge成功
 
 ## 2020-07-31
 1. 编译mindspore镜像后，在容器内无法运行（import ms成功，执行示例代码时print报错）；在宿主机上进行验证

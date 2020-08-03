@@ -5,39 +5,44 @@
 
 Device | IP            | username | passwd      |root_passwd   | hostname  | Domain         |
 |:-----|:--------------|:---------|:------------|:-------------|:----------|:---------------|
-CPU    |192.168.204.32 | pcl      | pclqizhi123 |apulis@pcl723 |atlas01    | atlas01.pcl.cn
-GPU    |192.168.202.135| pcl      | pcl@123     |apulis@pcl723 |atlas02    | atlas02.pcl.cn
-atlas  |192.168.206.18 | yitong   | Pcl@2020    |pcl123#$      |atlas03    | atlas03.pcl.cn
+CPU    |192.168.100.13 | ascend   | ascend910   |apulis@pcl723 |atlas01    | atlas01.ascend.cn
+GPU    |192.168.100.23 | ascend   | ascend910   |apulis@pcl723 |atlas02    | atlas02.ascend.cn
+atlas  |192.168.100.33 | ascend   | ascend910   |pcl123#$      |atlas03    | atlas03.ascend.cn
 
 
 1. Cluster Info
 
 ClusterName| host_name     |device_type|  host_ip      | role         |
 |:---------|:--------------|:----------|:--------------|:-------------|
-atlas      | atlas01       | CPU       |192.168.204.32 | master/worker
-atlas      | atlas02       | GPU       |192.168.202.135| worker
-atlas      | atlas03       | NPU       |192.168.206.18 | worker
+atlas      | atlas01       | NPU       |192.168.100.13 | worker
+atlas      | atlas02       | NPU       |192.168.100.23 | worker
+atlas      | atlas03       | NPU       |192.168.100.33 | master/worker
 
 2. Hosts LAN Dns, k8s 节点之间域名解析配置
 
     ```
     127.0.0.1       localhost
-
-    192.168.204.32    atlas01
-    192.168.204.32    atlas01.pcl.cn
-    192.168.204.32    atlas.pcl.cn
-
-    192.168.202.135   atlas02
-    192.168.202.135   atlas02.pcl.cn
+    192.168.100.13    atlas01
+    192.168.100.13    atlas01.ascend.cn
 
 
-    192.168.206.18    atlas03
-    192.168.206.18    atlas03.pcl.cn
+    192.168.100.23    atlas02
+    192.168.100.23    atlas02.ascend.cn
+
+
+    192.168.100.33    atlas03
+    192.168.100.33   atlas03.ascend.cn
+    121.37.54.27    atlas.ascend.cn
+
+    # The following lines are desirable for IPv6 capable hosts
+    ::1     localhost ip6-localhost ip6-loopback
+    ff02::1 ip6-allnodes
+    ff02::2 ip6-allrouters
     ```
 
 * 然后在 `/etc/resolv.conf` 添加
 
-    `search pcl.cn`
+    `search ascend.cn`
 
 * CPU, GPU, atlas 节点原配置文件备份：
     ```
@@ -48,8 +53,6 @@ atlas      | atlas03       | NPU       |192.168.206.18 | worker
 
     |username |passwd    |
     |:--------:|:--------|
-    caoshm     | 123456
-    xulf       | 123456
     admin      | 123456
 
 4. 确认GPU节点nvidia驱动与nvidia-docker均已正常安装
@@ -72,9 +75,9 @@ atlas      | atlas03       | NPU       |192.168.206.18 | worker
     ```
 6. 同步镜像问题
 
-*拉取docker镜像，需要公司docker hub账号，请联系管理员*
+    *拉取docker镜像，需要公司docker hub账号，请联系管理员*
 
-*如果配置脚本pull失败，则可以手工更新镜像源重新pull镜像。*
+    *如果配置脚本pull失败，则可以手工更新镜像源重新pull镜像。*
 
 * CPU节点：
     ```
@@ -117,17 +120,8 @@ atlas      | atlas03       | NPU       |192.168.206.18 | worker
     sudo docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.2 k8s.gcr.io/pause:3.2
     ```
 
-7. 节点加入问题
 
-*昨天发现GPU节点不能正常加入，原因是weavenet选错了路由*
-
-GPU节点中配置了这个路由：我们昨天把这个路由delete了，就能加入集群了。该路由如果你们需要，可以一起沟通下。
-```
-blackhole 10.41.10.192/26  proto bird 
-
-```
-
-8. 集群状态检查
+7. 集群状态检查
 
 * 查看集群节点状态
 
@@ -141,5 +135,5 @@ blackhole 10.41.10.192/26  proto bird
 
 `kubectl get pods`
 
-9. 网络示例
-![img](static/pcl_cluster.png)
+8. 网络示例
+![img](static/atlas_cluster.png)

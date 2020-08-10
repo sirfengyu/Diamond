@@ -107,10 +107,6 @@ build 并 tag 本地镜像
 ./deploy.py --verbose docker build restfulapi2
 docker image  tag  dlworkspace_restfulapi2:latest apulistech/dlworkspace_restfulapi2:latest
 
-# /home/apulis/front-end/DLWorkspace/src/ClusterBootstrap 前端最新分支！
-./deploy.py --verbose docker build webui3
-docker image  tag  dlworkspace_webui3:latest   apulistech/dlworkspace_webui3:latest
-
 ./deploy.py --nocache docker build custom-user-dashboard-frontend
 docker image  tag  dlworkspace_custom-user-dashboard-frontend:latest   apulistech/dlworkspace_custom-user-dashboard-frontend:latest
 
@@ -136,6 +132,9 @@ docker image  tag  job-exporter:1.9   apulistech/job-exporter:1.9
 ./deploy.py docker build repairmanager2
 docker image  tag  dlworkspace_repairmanager2:latest   apulistech/dlworkspace_repairmanager2:latest
 
+# /home/apulis/front-end/DLWorkspace/src/ClusterBootstrap 前端最新分支！
+./deploy.py --verbose docker build webui3
+docker image  tag  dlworkspace_webui3:latest   apulistech/dlworkspace_webui3:latest
 
 nginx 配置
 -----------------------------------------------------
@@ -161,3 +160,21 @@ location /expert {
     proxy_buffer_size 32k;
     proxy_pass http://localhost:3081;
 }
+
+AIArts
+-----------------------------------------------------------
+ssh root@219.133.167.42 -p 52080
+
+apulis123
+
+/home/apulis/AIArtsBackend/deployment
+./build.sh
+docker-compose down
+docker-compose up -d
+
+
+重启数据标注后台
+-----------------------------------------------------------
+标注后台
+./deploy.py --nocache docker push data-platform-backend
+./deploy.py kubernetes stop/start data-platform

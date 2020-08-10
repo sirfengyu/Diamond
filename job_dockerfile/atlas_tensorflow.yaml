@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM apulistech/ubuntu:18.04-python375-withtools
 
 ARG NNAE_VERSION
 ARG NNAE_ARCH=arm64
@@ -74,3 +74,11 @@ ENV PYTHONPATH=$TBE_IMPL_PATH:$PYTHONPATH
 # 触发postbuild.sh
 RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
     rm $POSTBUILD_SH
+
+
+# Build 
+docker build -f ./Dockerfile-tf-withtools-rc1  .  -t tf:1.15-rc1
+docker build -t ubuntu:18.04-python375-withtools -f ./Dockerfile-ubuntu1804 .  
+docker build -t ubuntu:18.04-python375-withtools -f ./Dockerfile-ubuntu1804 
+# 设置时区
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime

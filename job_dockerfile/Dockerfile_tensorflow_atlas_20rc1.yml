@@ -25,8 +25,8 @@ ${LOCAL_ASCEND}/nnae/20.0.RC1/arm64-linux_gcc7.3.0/fwkacllib/lib64:\
 ${LOCAL_ASCEND}/driver/lib64/common:\
 ${LOCAL_ASCEND}/driver/lib64/driver:\
 /usr/local/lib\:\
-/usr/lib/
-
+/usr/lib/:\
+/lib
 # Environment variables that must be configured
 # TBE operator implementation tool path
 ENV TBE_IMPL_PATH=${LOCAL_ASCEND}/ascend-toolkit/20.0.RC1/arm64-linux_gcc7.3.0/opp/op_impl/built-in/ai_core/tbe

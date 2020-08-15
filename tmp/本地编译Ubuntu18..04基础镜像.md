@@ -57,9 +57,17 @@ docker history --no-trunc docker.io/mysql:5.7
 
 8. 执行镜像，验证工具包是否可执行
 # docker run
+
+docker run -it --rm --privileged -v /dlwsdata/storage/:/data/ -v /var/log/npu/:/var/log/npu/ -v /var/log/npu/:/var/log/npu/ tf:1.15-0728 bash
 docker run -it --rm --privileged -v /dlwsdata/storage/:/data/ -v /var/log/npu/:/var/log/npu/ -v /var/log/npu/:/var/log/npu/ tf:1.15-rc1 bash
 docker run -it --rm --privileged --shm-size=16g -v /dlwsdata/storage/:/data/ -v /var/log/npu/:/var/log/npu/ -v /var/log/npu/:/var/log/npu/ tf:1.15-rc1 bash 
 
 python3.7
 import tensorflow
 import npu_bridge
+
+apt install libpython3.7 
+cd /usr/local/Ascend/nnae/20.0.RC1/arm64-linux_gcc7.3.0/fwkacllib/lib64
+ ldd libte_fusion.so
+
+ libpython3.7m.so.1.0

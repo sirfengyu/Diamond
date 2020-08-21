@@ -1,4 +1,35 @@
-root@atlas03:/home/HwHiAiUser/apulis_platform/src/ClusterBootstrap# ufw status
+1. 安装防火墙
+
+   `sudo apt install ufw`
+
+2. 查看UFW状态
+
+   `sudo ufw status verbose`
+
+3. 配置允许访问的应用
+
+    `ufw allow ssh`
+
+4. 启用 UFW
+
+    `ufw enable`
+
+5. 禁止访问端口
+    ```
+    ufw deny 2049/tcp
+    ufw deny 2049/tcp
+    ```
+
+6. 查看UFW 允许列表
+
+    `ufw app list`
+
+7. 允许子网内所有的 IP，你可以 CIDR 的格式来配置
+
+   `sudo ufw allow from 192.168.100.33/24`
+8. master节点防火墙配置示例
+```bash
+root@atlas03:~/docker-build# ufw status
 Status: active
 
 To                         Action      From
@@ -26,6 +57,8 @@ To                         Action      From
 Anywhere                   ALLOW       192.168.100.23
 Anywhere                   ALLOW       192.168.100.25
 Anywhere                   ALLOW       192.168.100.0/24
+3399                       ALLOW       Anywhere
+22                         ALLOW       Anywhere
 22/tcp (v6)                ALLOW       Anywhere (v6)
 2049/tcp (v6)              DENY        Anywhere (v6)
 9300/tcp (v6)              DENY        Anywhere (v6)
@@ -46,17 +79,11 @@ Anywhere                   ALLOW       192.168.100.0/24
 2049 (v6)                  DENY        Anywhere (v6)
 111 (v6)                   ALLOW       Anywhere (v6)
 13025 (v6)                 ALLOW       Anywhere (v6)
+3399 (v6)                  ALLOW       Anywhere (v6)
+22 (v6)                    ALLOW       Anywhere (v6)
 
-
-# master 节点要允许 22
-ufw allow 22
-
-
-
-
-apulis#2019#wednesday
-
-http://121.37.54.27/
-
-DLWSCluster-882aca27-2801-4966-9c72-4a91af1fdf7e 
-IfNotPresent
+```
+参考链接：
+1. [使用UFW配置防火墙](https://blog.csdn.net/bigdata_mining/article/details/80699180)
+2. [ubuntu ufw详解](https://help.ubuntu.com/community/UFW)
+3. [配置子网](https://www.jianshu.com/p/e2951fa4ce3a )

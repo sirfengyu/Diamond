@@ -1,11 +1,9 @@
-本地编译Ubuntu18..04基础镜像
+本地编译Tensorflow 1.15基础镜像
 =========================================================================
 
 
-1. 确认安装系统，工具版本信息
-| OS    | Version | Arct |
-|:------|:--------|:-----|
-|Ubuntu | 18.04.1 | arm64|
+1. 引用基础镜像
+FROM apulistech/ubuntu:18.04-python375-withtools
 
 2. 确认可用的依赖工具包，及安装源
 
@@ -48,7 +46,6 @@ ENV ASCEND_OPP_PATH=/usr/local/Ascend/ascend-toolkit/20.0.RC1/arm64-linux_gcc7.3
 
 # Build 
 docker build -f ./Dockerfile-tf-withtools-rc1  .  -t tf:1.15-rc1
-docker build -t ubuntu:18.04-python375-withtools -f ./Dockerfile-ubuntu1804 .  
 
 7. 查看镜像基本信息
 # Docker 查看镜像详情
@@ -58,16 +55,36 @@ docker history --no-trunc docker.io/mysql:5.7
 8. 执行镜像，验证工具包是否可执行
 # docker run
 
-docker run -it --rm --privileged -v /dlwsdata/storage/:/data/ -v /var/log/npu/:/var/log/npu/ -v /var/log/npu/:/var/log/npu/ tf:1.15-0728 bash
 docker run -it --rm --privileged -v /dlwsdata/storage/:/data/ -v /var/log/npu/:/var/log/npu/ -v /var/log/npu/:/var/log/npu/ tf:1.15-rc1 bash
-docker run -it --rm --privileged --shm-size=16g -v /dlwsdata/storage/:/data/ -v /var/log/npu/:/var/log/npu/ -v /var/log/npu/:/var/log/npu/ tf:1.15-rc1 bash 
 
 python3.7
 import tensorflow
 import npu_bridge
 
-apt install libpython3.7 
-cd /usr/local/Ascend/nnae/20.0.RC1/arm64-linux_gcc7.3.0/fwkacllib/lib64
- ldd libte_fusion.so
+9. tag , 同步镜像
 
- libpython3.7m.so.1.0
+docker tag tf:1.15-rc1 apulistech/tf:1.15-arm-rc1
+docker push apulistech/tf:1.15-arm-rc1
+
+
+FAQ
+----------------------------------------------------------------------------------------------------------
+
+Exception in thread Thread-1543:
+Traceback (most recent call last):
+  File "/home/docker-build/Python-3.7.5/Lib/test/test_ssl.py", line 2386, in run
+    msg = self.read()
+  File "/home/docker-build/Python-3.7.5/Lib/test/test_ssl.py", line 2363, in read
+    return self.sslconn.read()
+  File "/home/docker-build/Python-3.7.5/Lib/ssl.py", line 931, in read
+    return self._sslobj.read(len)
+ssl.SSLError: [SSL: PEER_DID_NOT_RETURN_A_CERTIFICATE] peer did not return a certificate (_ssl.c:2508)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/docker-build/Python-3.7.5/Lib/threading.py", line 926, in _bootstrap_inner
+    self.run()
+  File "/home/docker-build/Python-3.7.5/Lib/test/test_ssl.py", line 2472, in run
+    raise ssl.SSLError('tlsv13 alert certificate required')
+ssl.SSLError: ('tlsv13 alert certificate required',)

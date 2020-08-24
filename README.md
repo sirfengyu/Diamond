@@ -1,5 +1,5 @@
 
-Apulis Platform Testing Board
+Apulis QA & Ops Board
 ----------------------------------------------------------------------------
 
 

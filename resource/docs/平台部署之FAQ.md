@@ -98,15 +98,25 @@ FAQ
     * 重启master weavenet pod
 
 12. 节点之间22端口不通，隐射了其他端口
-    1）增加配置config.yaml 
 
-     ssh_port: 22
+    1) 增加配置config.yaml 
+
+        `ssh_port: 22`
+
+    2) 重新编译init-container
+        ```
+        # 修改config.yml中ssh_port: 隐射的端口 非 22
+        ./deploy.py --verbose rendertemplate ../docker-images/init-container/ssh_config/sshd/sshd_config.template ../docker-images/init-container/ssh_config/sshd/sshd_config
+        ./deploy.py --verbose docker push init-container
+        ```
+
+13. 配置master_private_IP
 
 
+14. 修改镜像拉取策略
 
-2) 重新编译init-container
-    ```
-    # 修改config.yml中ssh_port: 隐射的端口 非 22
-    ./deploy.py --verbose rendertemplate ../docker-images/init-container/ssh_config/sshd/sshd_config.template ../docker-images/init-container/ssh_config/sshd/sshd_config
-   ./deploy.py --verbose docker push init-container
-   ```
+
+  initContainers:
+  - name: init
+    imagePullPolicy: Always
+http://121.37.54.27/http://121.37.54.27/

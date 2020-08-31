@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM apulistech/ubuntu:18.04-python375-withtools
 
 ARG NNAE_VERSION
 ARG NNAE_ARCH=arm64
@@ -74,3 +74,6 @@ ENV PYTHONPATH=$TBE_IMPL_PATH:$PYTHONPATH
 # 触发postbuild.sh
 RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
     rm $POSTBUILD_SH
+
+
+

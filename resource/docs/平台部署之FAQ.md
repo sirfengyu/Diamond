@@ -110,13 +110,36 @@ FAQ
         ./deploy.py --verbose docker push init-container
         ```
 
-13. 配置master_private_IP
+13. 当为网络环境不允许配置公网域名，则需要配置IP的方式
+    * 修改restfullapi的endpoint的IP链接 `vim /etc/RestfulAPI/config.yaml`
+    <img src="../images/config_images/restfullapi配置.png" width = "600" height = "300" alt="域名配置" />
+    配置master_private_IP后，重启jobmanager2 restfulapi2
 
+    * 修改webui3的IP链接 `vim /etc/WebUI/local.yaml`
+    <img src="../images/config_images/webui3配置.png" width = "600" height = "300" alt="域名配置" />
+    保存配置后，重启webui3
 
-14. 修改镜像拉取策略
+14. IP访问方式下，nginx 没有起来
+    ```bash
+    kubectl get pods | grep nginx
+    kubeectl exec -it nginx-xxxx bash
+    ps aux # 查看nginx的进程是否起来
+    ```
+    将 `/etc/nginx/conf.d/default.conf` 中第5行 `server name`删除，然后再启动nginx
+    
 
+15. 修改镜像拉取策略
+    ```bash
+    vim ../Jobs_Templete/pod.yaml.template
+    # 如果需要直接使用本地镜像修改Always 为 IfNotPresent
+    initContainers:
+    - name: init
+        imagePullPolicy: Always
+    ```
 
-  initContainers:
-  - name: init
-    imagePullPolicy: Always
-http://121.37.54.27/http://121.37.54.27/
+16. endpoint 中ssh链接
+    
+    `ssh -p 32199 admin@121.37.54.27 [Password: tryme2017]`
+    要登录atlas主机的,因为使用了主机上保存的sshkey<br>
+    如果不登录atlas主机，在其他设备的终端下登录，可以这样，将 `-i /dlwsdata/work/admin/.ssh/id_rsa` 证书去掉，使用提示的密码 tryme2017 就可以
+    如：`ssh -p 32199 admin@121.37.54.27` 在这一步输入密码：`tryme2017`

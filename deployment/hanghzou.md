@@ -33,19 +33,24 @@ root登录，密码与之前相同
     + 多机多卡cmd: sudo -E bash -c 'source /pod.env && cp -r /data/resnet50_050/ /tmp/ && cd /tmp/resnet50_050/scripts/ && mkdir -p /var/log/npu/conf/slog/ && cp slog.conf /var/log/npu/conf/slog/ && ./run_distribute.sh resnet50 cifar10 /home/$DLWS_USER_NAME/.npu/$DLWS_JOB_ID/hccl_ms.json /data/resnet50_cifar10/cifar/ && sleep infinity'
 
 * 备份镜像目录：
-atlas02:/mnt/disk1/docker-images#
+    + `atlas02:/mnt/disk1/docker-images#`
 
 * 镜像同步目录：
 atlas01:/home/apulis_ftp_user/ftp/
 
 * k8s 镜像同步策略：
-Always: 一直会从docker hub 同步镜像，如果已经同步则会使用docker缓存
-IfNotPresent: 优先查看本地已经load的镜像，如果没有再从docker hub同步
+
+    + Always: 一直会从docker hub 同步镜像，如果已经同步则会使用docker缓存
+    + IfNotPresent: 优先查看本地已经load的镜像，如果没有再从docker hub同步
 
 * atc安装
-/dlwsdata/storage/atc 
+
+路径： `/dlwsdata/storage/atc`
 
 * k8s 安装源
 
-
+```
+cat /etc/apt/sources.list.d/kubernetes.list
+deb http://ports.ubuntu.com/ubuntu-ports bionic-security main
+```
 

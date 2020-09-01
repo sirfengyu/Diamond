@@ -9,7 +9,7 @@
     * 长域名格式：IP + 主机名.sigsus.cn；
     * docker harbor域名格式：执行部署脚本的主机IP + harbor.sigsus.cn。  如下图：
 
-    <img src="static/config_images/域名配置.png" width = "600" height = "300" alt="域名配置" />
+    <img src="../images/config_images/域名配置.png" width = "600" height = "300" alt="域名配置" />
 
 6. 在安装主机上新建两个空文件夹，一个用来挂载 NFS，一个用做 docker harbor 存储 docker 镜像，必须确保文件夹是空的；  
 
@@ -23,11 +23,11 @@
 6. 输入 docker harbor 的存储文件夹的路径（安装前新建的docker harbor空文件夹）;
 7. 设置 docker harbor 的密码，然后开始安装 harbor：
 
-    <img src="static/config_images/挂载NFS和设置haobor信息.png" width = "600" height = "300" alt="挂载NFS和设置haobor信息" />
+    <img src="../images/config_images/挂载NFS和设置haobor信息.png" width = "600" height = "300" alt="挂载NFS和设置haobor信息" />
 
 8. 输入刚刚设置的 docker harbor 密码，确认登录成功之后，输入 y 继续执行，之后脚本自动开始安装Python依赖包、然后 load 和 push docker 镜像，此过程比较漫长，请耐心等待：
 
-     <img src="static/config_images/输入harbor密码.png" width = "600" height = "300" alt="输入harbor密码" />
+     <img src="../images/config_images/输入harbor密码.png" width = "600" height = "300" alt="输入harbor密码" />
 
 9. 配置节点：
 
@@ -37,7 +37,7 @@
 
 10. 配置告警邮箱:
 
-    <img src="static/config_images/设置告警接收邮箱列表.png" width = "600" height = "300" alt="设置告警接收邮箱列表" />
+    <img src="../images/config_images/设置告警接收邮箱列表.png" width = "600" height = "300" alt="设置告警接收邮箱列表" />
     
 11. 平台状态检查：
     * 检查集群pod状态

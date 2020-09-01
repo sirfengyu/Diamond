@@ -15,6 +15,11 @@
    * 示例，重启监控组件如grafana,或openstry,如果立即stop/start，pod的服务会因主机端口占用启用失败；此时可以增加wait选项等待stop操作完成
 
       `kubectl wait --for=delete pod/openstry* --timeout=60s -n kube-system`
-
+      
+2. 查看并释放端口
+   ```bash
+   netstat -tln | grep 8080
+   lsof -i:8060
+   ```
    **参考：**
    [kubectl_wait](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#wait)

@@ -36,7 +36,8 @@ git合并不同库的分支
    git pull dlws <public> --allow-unrelated-histories
 
 4. 合并分支
-   ``` 
+
+   ```
    git branch -a 
 
    git merge dlws/public –no-ff 

@@ -21,6 +21,5 @@
    netstat -tln | grep 8080
    lsof -i:8060
    ```
-   
    **参考：**
    [kubectl_wait](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#wait)

@@ -44,13 +44,16 @@ git合并不同库的分支
    # 如果冲突太多，计划以新代码为主
    git  cherry-pick ..<master>  # 预先查看冲突文件并处理
    # git reset HEAD               # 撤销add
-   # 如果远端冲突太多，必须要用远端代码
-    git merge origin/master -s theirs –no-ff
+   # 如果远端冲突太多，策略必须要用远端代码
+    git merge origin/master -X theirs --no-ff
    ```
 5. 上传到开放repo
    
    `git push origin release-0.1.3-beta  <--force>`
 
+6. 撤销合并
+
+   `sudo git merge --abort`
 
 ---
 

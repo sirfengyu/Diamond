@@ -122,10 +122,11 @@ atlas      | atlas03       | NPU       |192.168.206.18 | worker
 *昨天发现GPU节点不能正常加入，原因是weavenet选错了路由*
 
 GPU节点中配置了这个路由：我们昨天把这个路由delete了，就能加入集群了。该路由如果你们需要，可以一起沟通下。
-```
-blackhole 10.41.10.192/26  proto bird 
 
-```
+    ```
+    blackhole 10.41.10.192/26  proto bird 
+
+    ```
 
 8. 集群状态检查
 

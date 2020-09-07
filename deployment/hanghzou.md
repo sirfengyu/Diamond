@@ -33,10 +33,12 @@ root登录，密码与之前相同
     + 多机多卡cmd: sudo -E bash -c 'source /pod.env && cp -r /data/resnet50_050/ /tmp/ && cd /tmp/resnet50_050/scripts/ && mkdir -p /var/log/npu/conf/slog/ && cp slog.conf /var/log/npu/conf/slog/ && ./run_distribute.sh resnet50 cifar10 /home/$DLWS_USER_NAME/.npu/$DLWS_JOB_ID/hccl_ms.json /data/resnet50_cifar10/cifar/ && sleep infinity'
 
 * 备份镜像目录：
+
     + `atlas02:/mnt/disk1/docker-images#`
 
 * 镜像同步目录：
-atlas01:/home/apulis_ftp_user/ftp/
+
+    `atlas01:/home/apulis_ftp_user/ftp/`
 
 * k8s 镜像同步策略：
 
